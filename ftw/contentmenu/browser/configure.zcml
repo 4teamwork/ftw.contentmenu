@@ -1,0 +1,17 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:five="http://namespaces.zope.org/five"
+    i18n_domain="ftw.dashboard.dragndrop">
+
+    <include package="plone.app.contentmenu" />
+	<include package="plone.app.portlets" />
+
+    <browser:viewlet
+       name="ftw.contentviews"
+       manager="plone.app.layout.viewlets.interfaces.IContentViews"
+       template="templates/contentviews.pt"
+       permission="zope2.View"
+       />	
+	
+</configure>
