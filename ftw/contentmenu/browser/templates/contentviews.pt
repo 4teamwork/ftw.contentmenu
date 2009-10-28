@@ -9,6 +9,9 @@
             tal:condition="view_actions"
             i18n:translate="heading_views">Views</h5>
 
+
+	    <div tal:replace="structure provider:plone.contentmenu" />
+
         <ul class="actionItems"
             id="content-views"
             i18n:domain="plone">
@@ -27,7 +30,6 @@
             </tal:views>
 
         </ul>
-        <div tal:replace="structure provider:plone.contentmenu" />
 
         
     </tal:block>
