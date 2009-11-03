@@ -9,7 +9,7 @@
 
     <browser:viewlet
        name="ftw.contentviews"
-       manager="plone.app.layout.viewlets.interfaces.IContentViews"
+       manager="plone.app.layout.viewlets.interfaces.IBelowContentTitle"
        template="templates/contentviews.pt"
        permission="zope2.View"
        />	
