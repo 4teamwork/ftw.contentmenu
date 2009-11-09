@@ -9,4 +9,7 @@
   <viewlet name="plone.contentviews"/>
   <viewlet name="plone.contentactions"/>
  </hidden>
+ <hidden manager="plone.belowcontenttitle" skinname="Plone Default">
+  <viewlet name="plone.belowcontenttitle.documentbyline"/>
+ </hidden>
 </object>
