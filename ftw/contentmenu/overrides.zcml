@@ -3,15 +3,26 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:zcml="http://namespaces.zope.org/zcml">
 
-    <configure package="plone.app.contentmenu">
+  <configure package="plone.app.contentmenu">
 
-        <!-- remove workflow menu by overriding it with an unavailable menu -->
-        <adapter
-            for="* *"
-            name="plone.contentmenu.workflow"
-            factory="ftw.contentmenu.overrides.WorkflowSubMenuItem"
-            provides=".interfaces.IContentMenuItem"
+    <!-- remove workflow menu by overriding it with an unavailable menu -->
+    <adapter
+        for="* *"
+        name="plone.contentmenu.workflow"
+        factory="ftw.contentmenu.overrides.WorkflowSubMenuItem"
+        provides=".interfaces.IContentMenuItem"
         />
-    </configure>
 
+    <adapter for="* *"
+             name="plone.contentmenu.actions"
+             factory="ftw.contentmenu.menu.CombinedActionsWorkflowSubMenuItem"
+             provides=".interfaces.IContentMenuItem" />
+
+    <browser:menu
+        id="plone_contentmenu_actions"
+        title="Combined actions- and workflow-menu"
+        class="ftw.contentmenu.menu.CombinedActionsWorkflowMenu"
+        />
+
+  </configure>
 </configure>
