@@ -10,7 +10,7 @@
 	<!-- Register the installation GenericSetup extension profile -->
     <genericsetup:registerProfile
       name="default"
-      title="ftw.contentmenu"
+      title="ftw.contentmneu"
       directory="profiles/default"
       description="A replacement for plone.app.contentmenu"
       provides="Products.GenericSetup.interfaces.EXTENSION"
