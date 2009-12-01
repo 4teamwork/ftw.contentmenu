@@ -9,11 +9,13 @@ class WorkflowSubMenuItem(menu.WorkflowSubMenuItem):
     implements(IWorkflowSubMenuItem)
 
     def available(self):
+        # XXX enable all
+        return super(WorkflowSubMenuItem, self).available()
         show_in_types = [
             'opengever.document.document',
             'opengever.dossier.businesscasedossier',
             'opengever.dossier.projectdossier',
             ]
-        if self.context.portal_type in show_in_types:
+        if self.context.portal_type not in show_in_types:
             return False
         return super(WorkflowSubMenuItem, self).available()
