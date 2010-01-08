@@ -1,9 +1,9 @@
 Changelog
 =========
 
-0.1 - Unreleased
-----------------
 
+1.0
+---
 
 * Enabled contentmenu for dossiers and documents
   [01.12.2009, jbaumann]
