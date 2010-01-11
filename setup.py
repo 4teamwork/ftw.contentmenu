@@ -4,6 +4,7 @@ import os
 version = open('ftw/contentmenu/version.txt').read().strip()
 maintainer = 'Thomas Buchberger'
 
+
 setup(name='ftw.contentmenu',
       version=version,
       description="A replacement for plone.app.contentmenu" + \
@@ -27,6 +28,8 @@ setup(name='ftw.contentmenu',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'plone.app.contentmenu',
+          'collective.testcaselayer',
           # -*- Extra requirements: -*-
       ],
       entry_points="""

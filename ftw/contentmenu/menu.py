@@ -2,8 +2,9 @@ from Acquisition import aq_inner
 from plone.app.contentmenu import menu
 from Products.CMFCore.utils import getToolByName, _checkPermission
 from Products.CMFPlone import PloneMessageFactory as _
-from zope.component import queryMultiAdapter
+from zope.component import queryMultiAdapter, getMultiAdapter
 from zope.interface import implements
+from Products.CMFCore.interfaces import IActionProvider
 
 
 class CombinedActionsWorkflowMenu( menu.ActionsMenu, menu.WorkflowMenu ):
@@ -12,18 +13,60 @@ class CombinedActionsWorkflowMenu( menu.ActionsMenu, menu.WorkflowMenu ):
     implements( menu.IActionsMenu, menu.IWorkflowMenu )
 
     def getMenuItems( self, context, request ):
-        # use default action menu items
-        action_items = menu.ActionsMenu.getMenuItems(
-                self, context, request
+        # action menu items
+        action_items = self.getActionsMenuItems(
+                context, request
                 )
                 
-        # use also default workflow menu items
+        # workflow menu items
         workflow_items = self.getWorkflowMenuItems(
                 context, request
                 )
         if len( workflow_items )>0:
             workflow_items[0]['extra']['separator'] = 'actionSeparator'
+
         return action_items + workflow_items
+
+    def getActionsMenuItems(self, context, request):
+        """Return menu item entries in a TAL-friendly form."""
+        results = []
+
+        portal_state = getMultiAdapter((context, request), name='plone_portal_state')
+
+        actions_tool = getToolByName(aq_inner(context), 'portal_actions')
+        editActions = actions_tool.listActionInfos(object=aq_inner(context), categories=('object_buttons',))
+
+        # include actions from 'portal_types' provider
+        provider = getattr(actions_tool, 'portal_types', None)
+        if IActionProvider.providedBy(provider):
+            type_actions = provider.listActionInfos(object=aq_inner(context))
+            type_actions = [action for action in type_actions if action.get('category')=='object_buttons']
+            editActions.extend(type_actions)
+
+        if not editActions:
+            return []
+
+        plone_utils = getToolByName(context, 'plone_utils')
+        portal_url = portal_state.portal_url()
+
+        for action in editActions:
+            if action['allowed']:
+                cssClass = 'actionicon-object_buttons-%s' % action['id']
+                icon = plone_utils.getIconFor('object_buttons', action['id'], None)
+                if icon:
+                    icon = '%s/%s' % (portal_url, icon)
+
+                results.append({ 'title'       : action['title'],
+                                 'description' : '',
+                                 'action'      : action['url'],
+                                 'selected'    : False,
+                                 'icon'        : icon,
+                                 'extra'       : {'id': action['id'], 'separator': None, 'class': cssClass},
+                                 'submenu'     : None,
+                                 })
+
+        return results
+
 
     # workflow menu items
     # 'advanced...' and 'policy...' items are only visible for managers
