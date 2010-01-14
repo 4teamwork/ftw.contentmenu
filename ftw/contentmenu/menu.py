@@ -150,3 +150,46 @@ class CombinedActionsWorkflowSubMenuItem( menu.ActionsSubMenuItem,
         if menu.WorkflowSubMenuItem.available( self ):
             return True
         return False
+
+class FactoriesMenu(menu.FactoriesMenu):
+    """ Extends the plone FactoriesMenu 
+    """
+
+    def getMenuItems(self, context, request):
+        
+        # get standard factory types
+        factories = super(FactoriesMenu, self).getMenuItems(context, request)
+        
+        # get factory actions from 'portal_types' action provider
+        actions_tool = getToolByName(aq_inner(context), 'portal_actions')
+        provider = getattr(actions_tool, 'portal_types', None)
+        type_actions = []
+        if IActionProvider.providedBy(provider):
+            type_actions = provider.listActionInfos(object=aq_inner(context))
+            type_actions = [action for action in type_actions if action.get('category')=='factory']
+        
+        if not type_actions:
+            return factories
+
+        plone_utils = getToolByName(context, 'plone_utils')
+        portal_state = getMultiAdapter((context, request), name='plone_portal_state')
+        portal_url = portal_state.portal_url()
+
+        for action in type_actions:
+            if action['allowed']:
+                cssClass = 'actionicon-factory-%s' % action['id']
+                icon = plone_utils.getIconFor('factory', action['id'], None)
+                if icon:
+                    icon = '%s/%s' % (portal_url, icon)
+
+                factories.append({ 'title'       : action['title'],
+                                 'description' : '',
+                                 'action'      : action['url'],
+                                 'selected'    : False,
+                                 'icon'        : icon,
+                                 'extra'       : {'id': action['id'], 'separator': None, 'class': cssClass},
+                                 'submenu'     : None,
+                                 })
+        return factories
+
+        

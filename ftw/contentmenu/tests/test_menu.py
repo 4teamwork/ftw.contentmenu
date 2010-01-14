@@ -1,6 +1,6 @@
 from zope.component import queryUtility, getUtility
 from zope.app.publisher.interfaces.browser import IBrowserMenu
-from plone.app.contentmenu.interfaces import IActionsMenu
+from plone.app.contentmenu.interfaces import IActionsMenu, IFactoriesMenu
 from Products.PloneTestCase.ptc import PloneTestCase
 from ftw.contentmenu.tests.layer import Layer
 
@@ -46,3 +46,31 @@ class TestActionsMenu(PloneTestCase):
         self.failUnless('advanced' in
                         [a['extra']['id'] for a in actions])
 
+
+class TestFactoriesMenu(PloneTestCase):
+
+    layer = Layer
+
+    def afterSetUp(self):
+        self.folder.invokeFactory('Document', 'doc1')
+        self.menu = getUtility(IBrowserMenu, name='plone_contentmenu_factory', context=self.folder)
+        self.request = self.app.REQUEST
+
+    def testMenuImplementsIBrowserMenu(self):
+        self.failUnless(IBrowserMenu.providedBy(self.menu))
+
+    def testMenuImplementsIFactoriesMenu(self):
+        self.failUnless(IFactoriesMenu.providedBy(self.menu))
+
+    def testMenuIncludesFactories(self):
+        actions = self.menu.getMenuItems(self.folder, self.request)
+        self.failUnless('image' in [a['extra']['id'] for a in actions])
+
+    def test_menu_includes_factory_actions(self):
+        folder_fti = self.portal.portal_types['Folder']
+        folder_fti.addAction('test_factory_action',
+                             'Test Factory Action',
+                             'string:${object_url}', '', '', 'factory')            
+        actions = self.menu.getMenuItems(self.folder, self.request)
+        folder_fti = self.portal.portal_types['Folder']
+        self.failUnless('test_factory_action' in [a['extra']['id'] for a in actions])
