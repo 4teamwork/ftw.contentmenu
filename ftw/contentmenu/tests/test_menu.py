@@ -70,7 +70,14 @@ class TestFactoriesMenu(PloneTestCase):
         folder_fti = self.portal.portal_types['Folder']
         folder_fti.addAction('test_factory_action',
                              'Test Factory Action',
-                             'string:${object_url}', '', '', 'factory')            
+                             'string:${object_url}', '', '', 'folder_factories')            
         actions = self.menu.getMenuItems(self.folder, self.request)
         folder_fti = self.portal.portal_types['Folder']
         self.failUnless('test_factory_action' in [a['extra']['id'] for a in actions])
+        # test with permissions
+        folder_fti.addAction('test_factory_action_perm',
+                             'Test Factory Action',
+                             'string:${object_url}', '', 'Add portal content', 'folder_factories')            
+        actions = self.menu.getMenuItems(self.folder, self.request)
+        folder_fti = self.portal.portal_types['Folder']
+        self.failUnless('test_factory_action_perm' in [a['extra']['id'] for a in actions])

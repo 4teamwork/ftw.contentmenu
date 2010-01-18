@@ -166,7 +166,7 @@ class FactoriesMenu(menu.FactoriesMenu):
         type_actions = []
         if IActionProvider.providedBy(provider):
             type_actions = provider.listActionInfos(object=aq_inner(context))
-            type_actions = [action for action in type_actions if action.get('category')=='factory']
+            type_actions = [action for action in type_actions if action.get('category')=='folder_factories']
         
         if not type_actions:
             return factories
@@ -177,8 +177,8 @@ class FactoriesMenu(menu.FactoriesMenu):
 
         for action in type_actions:
             if action['allowed']:
-                cssClass = 'actionicon-factory-%s' % action['id']
-                icon = plone_utils.getIconFor('factory', action['id'], None)
+                cssClass = 'actionicon-folder_factories-%s' % action['id']
+                icon = plone_utils.getIconFor('folder_factories', action['id'], None)
                 if icon:
                     icon = '%s/%s' % (portal_url, icon)
 
