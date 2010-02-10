@@ -12,6 +12,7 @@
        manager="plone.app.layout.viewlets.interfaces.IBelowContentTitle"
        template="templates/contentviews.pt"
        permission="zope2.View"
+       layer="ftw.contentmenu.interfaces.IFtwContentmenuSpecific"
        />	
 	
 </configure>
