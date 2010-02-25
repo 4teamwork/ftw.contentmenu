@@ -17,5 +17,7 @@
       />
 
 	<include package=".browser" />
-
+	
+    <includePluginsOverrides package="." file="overrides.zcml" />
+	
 </configure>

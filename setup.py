@@ -35,6 +35,6 @@ setup(name='ftw.contentmenu',
       entry_points="""
       # -*- Entry points: -*-
       [z3c.autoinclude.plugin]
-      target = opengever
+      target = plone
       """,
       )
