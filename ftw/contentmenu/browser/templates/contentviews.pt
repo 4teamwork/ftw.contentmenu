@@ -1,9 +1,9 @@
 <div i18n:domain="plone" 
      class="contentActions"
-     tal:define="ploneview context/@@plone;">
+     tal:define="ploneview context/@@plone;"
+     tal:condition="ploneview/showEditableBorder">
 
-    <tal:block define="view_actions ploneview/prepareObjectTabs;" 
-               condition="ploneview/showEditableBorder">
+    <tal:block define="view_actions ploneview/prepareObjectTabs;">
 	
         <h5 class="hiddenStructure"
             tal:condition="view_actions"
