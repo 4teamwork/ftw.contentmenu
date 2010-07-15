@@ -4,6 +4,10 @@ import os
 version = open('ftw/contentmenu/version.txt').read().strip()
 maintainer = 'Thomas Buchberger'
 
+tests_require = [
+    'zope.testing',
+    'collective.testcaselayer',
+]
 
 setup(name='ftw.contentmenu',
       version=version,
@@ -29,9 +33,10 @@ setup(name='ftw.contentmenu',
       install_requires=[
           'setuptools',
           'plone.app.contentmenu',
-          'collective.testcaselayer',
           # -*- Extra requirements: -*-
       ],
+      tests_require=tests_require,
+      extras_require=dict(tests=tests_require),
       entry_points="""
       # -*- Entry points: -*-
       [z3c.autoinclude.plugin]

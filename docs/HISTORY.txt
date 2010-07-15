@@ -2,8 +2,11 @@ Changelog
 =========
 
 
-1.0a7
------
+1.0a7-dev
+---------
+
+* Moved test requirements into tests_require, extras_require
+  [Thomas Buchberger]
 
 
 1.0a6
