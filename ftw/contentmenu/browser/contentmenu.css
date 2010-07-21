@@ -1,0 +1,45 @@
+#edit-bar {
+    display: none;
+}
+#ftw-edit-bar {
+    background-color: #75ad0a;
+    border: 0.25em solid #75ad0a;
+    min-height: 2em;
+    display: block;
+    border-style: solid solid none solid; 
+    margin-left: 0;
+    margin-bottom: 1em;
+    border-top-right-radius: 0.5em;
+    border-top-left-radius: 0.5em;
+    -webkit-border-top-right-radius: 0.5em;
+    -webkit-border-top-left-radius: 0.5em;
+    -moz-border-radius-topleft: 0.5em;
+    -moz-border-radius-topright: 0.5em;
+}
+#ftw-edit-bar ul {
+    margin: 0;
+    list-style-type: none;
+}
+#ftw-edit-bar dl {
+    margin-bottom: 0;
+}
+#ftw-edit-bar a:link,
+#ftw-edit-bar a:visited {
+    border-bottom: none;
+    color: white;
+}
+#ftw-edit-bar dl.actionMenu.deactivated dt {
+    margin: 0 0.25em;
+}
+#content-views li {
+    display: inline;
+}
+#content-views li a:hover {
+    color: black !important;
+}
+#contentActionMenus li {
+    display: inline;
+}
+#contentActionMenus dt a:hover {
+    color: white !important;
+}

@@ -7,10 +7,15 @@
     <include package="plone.app.contentmenu" />
 	<include package="plone.app.portlets" />
 
+    <browser:resource
+        name="contentmenu.css"
+        file="contentmenu.css"
+    />
+    
     <browser:viewlet
        name="ftw.contentviews"
        manager="plone.app.layout.viewlets.interfaces.IBelowContentTitle"
-       template="templates/contentviews.pt"
+       class=".viewlets.ContentViewsViewlet"
        permission="zope2.View"
        layer="ftw.contentmenu.interfaces.IFtwContentmenuSpecific"
        />	
