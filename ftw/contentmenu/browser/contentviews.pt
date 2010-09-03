@@ -1,4 +1,4 @@
-<div i18n:domain="plone" 
+<div i18n:domain="ftw.contentmenu" 
      id="ftw-edit-bar"
      tal:define="ploneview context/@@plone;"
      tal:condition="ploneview/showEditableBorder">
@@ -16,7 +16,7 @@
         
         <ul class="contentViews"
             id="content-views"
-            i18n:domain="plone">
+            i18n:domain="ftw.contentmenu">
 
             <tal:views repeat="action view_actions">
               <li tal:define="selected action/selected|nothing;"

@@ -3,3 +3,4 @@
 ftw.contentmenu.egg-info
 build
 dist
+*.mo
