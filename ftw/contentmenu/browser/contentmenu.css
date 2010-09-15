@@ -5,7 +5,11 @@
 /* In the control panel the edit bar has to be visible otherwise some features
 are not accessible. Another design flaw of our 'usability improvement'. */
 body.template-user-information #edit-bar,
-body.template-atct_manageTopicIndex #edit-bar {
+body.template-atct_manageTopicIndex #edit-bar,
+body.template-usergroup-userprefs #edit-bar,
+body.template-usergroup-groupprefs #edit-bar,
+body.template-usergroup-controlpanel #edit-bar,
+body.template-member-registration #edit-bar {
     display: block !important;
 }
 #ftw-edit-bar {
