@@ -1,6 +1,13 @@
 #edit-bar {
     display: none;
 }
+
+/* In the control panel the edit bar has to be visible otherwise some features
+are not accessible. Another design flaw of our 'usability improvement'. */
+body.template-user-information #edit-bar,
+body.template-atct_manageTopicIndex #edit-bar {
+    display: block !important;
+}
 #ftw-edit-bar {
     background-color: #75ad0a;
     border: 0.25em solid #75ad0a;
