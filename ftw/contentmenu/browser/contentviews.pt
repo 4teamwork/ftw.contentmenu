@@ -11,7 +11,7 @@
 
 
         <div class="contentActions">
-            <div tal:replace="structure provider:plone.contentmenu" />
+            <div i18n:domain="plone" i18n:translate="" tal:replace="structure provider:plone.contentmenu" />
         </div>
         
         <ul class="contentViews"
