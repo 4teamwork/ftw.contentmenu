@@ -1,10 +1,10 @@
-<div i18n:domain="ftw.contentmenu" 
+<div i18n:domain="plone"
      id="ftw-edit-bar"
      tal:define="ploneview context/@@plone;"
      tal:condition="ploneview/showEditableBorder">
 
     <tal:block define="view_actions view/prepareObjectTabs;">
-	
+
         <h5 class="hiddenStructure"
             tal:condition="view_actions"
             i18n:translate="heading_views">Views</h5>
@@ -13,10 +13,9 @@
         <div class="contentActions">
             <div i18n:domain="plone" i18n:translate="" tal:replace="structure provider:plone.contentmenu" />
         </div>
-        
+
         <ul class="contentViews"
-            id="content-views"
-            i18n:domain="ftw.contentmenu">
+            id="content-views">
 
             <tal:views repeat="action view_actions">
               <li tal:define="selected action/selected|nothing;"
