@@ -117,17 +117,18 @@ class CombinedActionsWorkflowMenu( menu.ActionsMenu, menu.WorkflowMenu ):
                     break
 
             if action['allowed']:
-                results.append({ 'title'       : action['title'],
-                                 'description' : description,
-                                 'action'      : actionUrl,
-                                 'selected'    : False,
-                                 'icon'        : None,
-                                 'extra'       : {'id': 'workflow-transition'+\
-                                                      action['id'],
-                                                  'separator': None,
-                                                  'class': cssClass},
-                                 'submenu'     : None,
-                                 })
+                results.append({
+                        'title'       : action['title'],
+                        'description' : description,
+                        'action'      : actionUrl,
+                        'selected'    : False,
+                        'icon'        : None,
+                        'extra'       : {'id': 'workflow-transition-'+\
+                                             action['id'],
+                                         'separator': None,
+                                         'class': cssClass},
+                        'submenu'     : None,
+                        })
 
         url = context.absolute_url()
 
@@ -217,4 +218,3 @@ class FactoriesMenu(menu.FactoriesMenu):
                                    'submenu'     : None,
                                    })
         return factories
-
