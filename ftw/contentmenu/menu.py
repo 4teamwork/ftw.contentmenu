@@ -1,10 +1,11 @@
 from Acquisition import aq_inner
-from plone.app.contentmenu import menu
+from Products.CMFCore.interfaces import IActionProvider
 from Products.CMFCore.utils import getToolByName, _checkPermission
 from Products.CMFPlone import PloneMessageFactory as _
+from ftw.contentmenu.interfaces import IContentmenuPostFactoryMenu
+from plone.app.contentmenu import menu
 from zope.component import queryMultiAdapter, getMultiAdapter
 from zope.interface import implements
-from Products.CMFCore.interfaces import IActionProvider
 
 
 class CombinedActionsWorkflowMenu( menu.ActionsMenu, menu.WorkflowMenu ):
@@ -192,7 +193,7 @@ class FactoriesMenu(menu.FactoriesMenu):
                             if action.get('category')=='folder_factories']
 
         if not type_actions:
-            return factories
+            return self._post_cleanup_factories(context, request, factories)
 
         plone_utils = getToolByName(context, 'plone_utils')
         portal_state = getMultiAdapter((context, request),
@@ -217,4 +218,17 @@ class FactoriesMenu(menu.FactoriesMenu):
                                                     'class': cssClass},
                                    'submenu'     : None,
                                    })
-        return factories
+        return self._post_cleanup_factories(context, request, factories)
+
+    def _post_cleanup_factories(self, context, request, factories):
+        """For easier hook-in we call the IContentmenuPostFactoryMenu adapter,
+        which may clean up the factories list.
+        """
+
+        adpt = queryMultiAdapter((context, request),
+                                 IContentmenuPostFactoryMenu)
+
+        if adpt:
+            return adpt(factories)
+        else:
+            return factories

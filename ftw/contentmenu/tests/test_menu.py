@@ -1,8 +1,30 @@
-from zope.component import getUtility
-from zope.app.publisher.interfaces.browser import IBrowserMenu
-from plone.app.contentmenu.interfaces import IActionsMenu, IFactoriesMenu
 from Products.PloneTestCase.ptc import PloneTestCase
+from ftw.contentmenu.interfaces import IContentmenuPostFactoryMenu
 from ftw.contentmenu.tests.layer import Layer
+from plone.app.contentmenu.interfaces import IActionsMenu, IFactoriesMenu
+from zope.app.publisher.interfaces.browser import IBrowserMenu
+from zope.component import getUtility, provideAdapter, queryMultiAdapter
+from zope.interface import Interface, alsoProvides, implements
+from zope.interface import noLongerProvides
+
+class NullPostFactoryMenu(object):
+    """This post factory menu adapter returns a empty list of factory,
+    needed for testing purposes.
+    """
+
+    implements(IContentmenuPostFactoryMenu)
+
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+
+    def __call__(self, factories):
+        return []
+
+
+class INullMarker(Interface):
+    """Used to mark a context for using the null post factory menu.
+    """
 
 
 class TestActionsMenu(PloneTestCase):
@@ -91,3 +113,24 @@ class TestFactoriesMenu(PloneTestCase):
         folder_fti = self.portal.portal_types['Folder']
         self.failUnless('test_factory_action_perm' in [a['extra']['id']
                                                        for a in actions])
+
+    def test_post_menu_item_adapter(self):
+        actions = self.menu.getMenuItems(self.folder, self.request)
+        # we should have some actions
+        self.failUnless(len(actions) > 0)
+        # register the null post factory menu adapter..
+        provideAdapter(NullPostFactoryMenu,
+                       (INullMarker, Interface),
+                       IContentmenuPostFactoryMenu)
+        alsoProvides(self.folder, INullMarker)
+        adpt = queryMultiAdapter((self.folder, self.request),
+                                 IContentmenuPostFactoryMenu)
+        self.failUnless(isinstance(adpt, NullPostFactoryMenu))
+        # .. then we should not have any more actions
+        actions = self.menu.getMenuItems(self.folder, self.request)
+        self.failUnless(len(actions) == 0)
+        # and cleanup: lets remove the interface from the context
+        noLongerProvides(self.folder, INullMarker)
+        adpt = queryMultiAdapter((self.folder, self.request),
+                                 IContentmenuPostFactoryMenu)
+        self.failIf(isinstance(adpt, NullPostFactoryMenu))
