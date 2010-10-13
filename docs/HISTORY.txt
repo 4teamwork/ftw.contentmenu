@@ -5,6 +5,9 @@ Changelog
 1.0a7-dev
 ---------
 
+* Support icon expression on folder_factories actions. Using actionicons is deprecated in plone 4
+  [13.10.2010, jbaumann]
+
 * Moved test requirements into tests_require, extras_require
   [Thomas Buchberger]
 

@@ -222,7 +222,9 @@ class FactoriesMenu(menu.FactoriesMenu):
                                        })
 
         # order the actions
-        factories.sort(lambda aa, bb: cmp(aa['title'], bb['title']))
+        factories.sort(lambda aa, bb:
+                           cmp(context.translate(aa.get('title', '')),
+                               context.translate(bb.get('title', ''))))
 
         return self._post_cleanup_factories(context, request, factories)
 
