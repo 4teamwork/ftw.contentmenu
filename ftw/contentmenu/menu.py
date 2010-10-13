@@ -192,32 +192,38 @@ class FactoriesMenu(menu.FactoriesMenu):
             type_actions = [action for action in type_actions
                             if action.get('category')=='folder_factories']
 
-        if not type_actions:
-            return self._post_cleanup_factories(context, request, factories)
+        if type_actions:
+            # WARNING: use of portal_actionicons is deprecated!
+            plone_utils = getToolByName(context, 'plone_utils')
+            portal_state = getMultiAdapter((context, request),
+                                           name='plone_portal_state')
+            portal_url = portal_state.portal_url()
 
-        plone_utils = getToolByName(context, 'plone_utils')
-        portal_state = getMultiAdapter((context, request),
-                                       name='plone_portal_state')
-        portal_url = portal_state.portal_url()
+            for action in type_actions:
+                if action['allowed']:
+                    cssClass = 'actionicon-folder_factories-%s' % action['id']
+                    icon = action['icon']
+                    if not icon:
+                        icon = plone_utils.getIconFor('folder_factories',
+                                                      action['id'],
+                                                      None)
+                        if icon:
+                            icon = '%s/%s' % (portal_url, icon)
 
-        for action in type_actions:
-            if action['allowed']:
-                cssClass = 'actionicon-folder_factories-%s' % action['id']
-                icon = plone_utils.getIconFor('folder_factories', action['id'],
-                                              None)
-                if icon:
-                    icon = '%s/%s' % (portal_url, icon)
+                    factories.append({ 'title'       : action['title'],
+                                       'description' : '',
+                                       'action'      : action['url'],
+                                       'selected'    : False,
+                                       'icon'        : icon,
+                                       'extra'       : {'id': action['id'],
+                                                        'separator': None,
+                                                        'class': cssClass},
+                                       'submenu'     : None,
+                                       })
 
-                factories.append({ 'title'       : action['title'],
-                                   'description' : '',
-                                   'action'      : action['url'],
-                                   'selected'    : False,
-                                   'icon'        : icon,
-                                   'extra'       : {'id': action['id'],
-                                                    'separator': None,
-                                                    'class': cssClass},
-                                   'submenu'     : None,
-                                   })
+        # order the actions
+        factories.sort(lambda aa, bb: cmp(aa['title'], bb['title']))
+
         return self._post_cleanup_factories(context, request, factories)
 
     def _post_cleanup_factories(self, context, request, factories):
