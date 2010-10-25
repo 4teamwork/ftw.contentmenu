@@ -72,6 +72,11 @@ class CombinedActionsWorkflowMenu( menu.ActionsMenu, menu.WorkflowMenu ):
                                  'submenu'     : None,
                                  })
 
+        # order the actions
+        results.sort(lambda aa, bb:
+                         cmp(context.translate(aa.get('title', '')),
+                             context.translate(bb.get('title', ''))))
+
         return results
 
 
