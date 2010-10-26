@@ -10,12 +10,14 @@
 	<!-- Register the installation GenericSetup extension profile -->
     <genericsetup:registerProfile
       name="default"
-      title="ftw.contentmneu"
+      title="ftw.contentmenu"
       directory="profiles/default"
       description="A replacement for plone.app.contentmenu"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+    <i18n:registerTranslations directory="locales" />
+    
 	<include package=".browser" />
 	
     <includePluginsOverrides package="." file="overrides.zcml" />
