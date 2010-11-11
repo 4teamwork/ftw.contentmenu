@@ -33,7 +33,6 @@ setup(name='ftw.contentmenu',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'plone.app.contentmenu',
           # -*- Extra requirements: -*-
       ],
       tests_require=tests_require,
