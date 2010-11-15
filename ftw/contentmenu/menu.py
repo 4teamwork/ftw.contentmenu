@@ -1,3 +1,5 @@
+from plone.memoize.instance import memoize
+from zope.app.publisher.browser.menu import getMenu
 from Acquisition import aq_inner
 from Products.CMFCore.interfaces import IActionProvider
 from Products.CMFCore.utils import getToolByName, _checkPermission
@@ -172,19 +174,17 @@ class CombinedActionsWorkflowSubMenuItem( menu.ActionsSubMenuItem,
                                           menu.WorkflowSubMenuItem ):
     implements( menu.IActionsSubMenuItem, menu.IWorkflowSubMenuItem )
 
-    def available( self ):
-        if menu.ActionsSubMenuItem.available( self ):
-            return True
-        if menu.WorkflowSubMenuItem.available( self ):
-            return True
-        return False
+    # @memoize
+    def available(self):
+        menu = getMenu(self.submenuId, self.context, self.request)
+        return len(menu) > 0
+
 
 class FactoriesMenu(menu.FactoriesMenu):
     """ Extends the plone FactoriesMenu
     """
 
     def getMenuItems(self, context, request):
-
         # get standard factory types
         factories = super(FactoriesMenu, self).getMenuItems(context, request)
 

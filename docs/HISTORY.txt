@@ -5,6 +5,9 @@ Changelog
 1.0a7-dev
 ---------
 
+* Actions menu: fixed available() implementation which was buggy because of the many sources
+  [jbaumann]
+
 * Support icon expression on folder_factories actions. Using actionicons is deprecated in plone 4
   [13.10.2010, jbaumann]
 
