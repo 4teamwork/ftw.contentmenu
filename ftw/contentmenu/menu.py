@@ -8,6 +8,7 @@ from ftw.contentmenu.interfaces import IContentmenuPostFactoryMenu
 from plone.app.contentmenu import menu
 from zope.component import queryMultiAdapter, getMultiAdapter
 from zope.interface import implements
+from zope.i18n import translate
 
 
 class CombinedActionsWorkflowMenu( menu.ActionsMenu, menu.WorkflowMenu ):
@@ -76,8 +77,8 @@ class CombinedActionsWorkflowMenu( menu.ActionsMenu, menu.WorkflowMenu ):
 
         # order the actions
         results.sort(lambda aa, bb:
-                         cmp(context.translate(aa.get('title', '')),
-                             context.translate(bb.get('title', ''))))
+                         cmp(translate(aa.get('title', '')),
+                             translate(bb.get('title', ''))))
 
         return results
 
@@ -228,8 +229,8 @@ class FactoriesMenu(menu.FactoriesMenu):
 
         # order the actions
         factories.sort(lambda aa, bb:
-                           cmp(context.translate(aa.get('title', '')),
-                               context.translate(bb.get('title', ''))))
+                           cmp(translate(aa.get('title', '')),
+                               translate(bb.get('title', ''))))
 
         return self._post_cleanup_factories(context, request, factories)
 
