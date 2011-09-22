@@ -77,8 +77,8 @@ class CombinedActionsWorkflowMenu( menu.ActionsMenu, menu.WorkflowMenu ):
 
         # order the actions
         results.sort(lambda aa, bb:
-                         cmp(translate(aa.get('title', '')),
-                             translate(bb.get('title', ''))))
+                         cmp(translate(aa.get('title', ''), context=request),
+                             translate(bb.get('title', ''), context=request)))
 
         return results
 
@@ -229,8 +229,9 @@ class FactoriesMenu(menu.FactoriesMenu):
 
         # order the actions
         factories.sort(lambda aa, bb:
-                           cmp(translate(aa.get('title', '')),
-                               translate(bb.get('title', ''))))
+                           cmp(translate(aa.get('title', ''), domain='opengever.dossier', context=request),
+                               translate(bb.get('title', ''), domain='opengever.dossier', context=request)))
+        import pdb; pdb.set_trace( )
 
         return self._post_cleanup_factories(context, request, factories)
 
