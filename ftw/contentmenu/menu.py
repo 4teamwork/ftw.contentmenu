@@ -231,7 +231,6 @@ class FactoriesMenu(menu.FactoriesMenu):
         factories.sort(lambda aa, bb:
                            cmp(translate(aa.get('title', ''), domain='opengever.dossier', context=request),
                                translate(bb.get('title', ''), domain='opengever.dossier', context=request)))
-        import pdb; pdb.set_trace( )
 
         return self._post_cleanup_factories(context, request, factories)
 
