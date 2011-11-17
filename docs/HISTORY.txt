@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-2.0a4 (unreleased)
-------------------
+2.0 (2011-11-17)
+----------------
 
 - Issue #1176 alle translatinos mit from zope.i18n import translate
   https://extranet.4teamwork.ch/projects/opengever-kanton-zug/sprint-backlog/1176
