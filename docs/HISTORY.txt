@@ -11,57 +11,37 @@ Changelog
 2.0 (2011-11-17)
 ----------------
 
-- Issue #1176 alle translatinos mit from zope.i18n import translate
-  https://extranet.4teamwork.ch/projects/opengever-kanton-zug/sprint-backlog/1176
+- Use zope.i18n for translations.
   [eschmutz]
 
-- added test-buildout for plone 4.1
+- Added test-buildout for plone 4.1
   [eschmutz]
 
-
-2.0a3 (2010-11-18)
-------------------
 
 
 1.0a7
 -----
 
 - Actions menu: fixed available() implementation which was buggy because of the many sources
-  [jbaumann]
+  [jone]
 
 - Support icon expression on folder_factories actions. Using actionicons is deprecated in plone 4
-  [13.10.2010, jbaumann]
+  [jone]
 
 - Moved test requirements into tests_require, extras_require
   [Thomas Buchberger]
 
 
+
 1.0a6
 -----
+
 - Do not show contentmenu for anonymous users
-  [17.06.2010, fsprenger]
-
-1.0a5
------
-
-
-1.0a4
------
-
-
-1.0a3
------
-
-
-1.0a2
------
+  [fsprenger]
 
 
 1.0
 ---
 
 - Enabled contentmenu for dossiers and documents
-  [01.12.2009, jbaumann]
-
-- Initial release
-
+  [jone]
