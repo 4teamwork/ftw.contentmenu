@@ -26,6 +26,7 @@ Links
 - Main github project repository: https://github.com/4teamwork/ftw.contentmenu
 - Issue tracker: https://github.com/4teamwork/ftw.contentmenu/issues
 - Package on pypi: http://pypi.python.org/pypi/ftw.contentmenu
+- Continuous Integration: https://jenkins.4teamwork.ch/job/ftw.contentmenu/
 
 
 Maintainer
