@@ -2,14 +2,9 @@ Changelog
 =========
 
 
-2.0a2
------
+1.1
+---
 
-
-2.0a1
------
-* Merged plone4-compatibility branch into trunk
-  [26.10.2010, mathias.leimgruber]
 
 1.0a7-dev
 ---------
