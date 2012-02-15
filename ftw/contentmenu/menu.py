@@ -1,14 +1,14 @@
-from plone.memoize.instance import memoize
-from zope.app.publisher.browser.menu import getMenu
 from Acquisition import aq_inner
 from Products.CMFCore.interfaces import IActionProvider
 from Products.CMFCore.utils import getToolByName, _checkPermission
 from Products.CMFPlone import PloneMessageFactory as _
 from ftw.contentmenu.interfaces import IContentmenuPostFactoryMenu
 from plone.app.contentmenu import menu
+from plone.app.contentmenu.interfaces import IFactoriesSubMenuItem
+from zope.app.publisher.browser.menu import getMenu
 from zope.component import queryMultiAdapter, getMultiAdapter
-from zope.interface import implements
 from zope.i18n import translate
+from zope.interface import implements
 
 
 class CombinedActionsWorkflowMenu( menu.ActionsMenu, menu.WorkflowMenu ):
@@ -176,6 +176,18 @@ class CombinedActionsWorkflowSubMenuItem( menu.ActionsSubMenuItem,
     implements( menu.IActionsSubMenuItem, menu.IWorkflowSubMenuItem )
 
     # @memoize
+    def available(self):
+        menu = getMenu(self.submenuId, self.context, self.request)
+        return len(menu) > 0
+
+
+class FtwFactoriesSubMenuItem(menu.FactoriesSubMenuItem):
+    """A ftw.contetmenu specific plone.contentmenu.factories adapter,
+    which overrides the available method, so that it realy checks the menu items.
+    Instead of the original method wich only count the addable types."""
+
+    implements(IFactoriesSubMenuItem)
+
     def available(self):
         menu = getMenu(self.submenuId, self.context, self.request)
         return len(menu) > 0
