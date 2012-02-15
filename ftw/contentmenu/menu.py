@@ -11,12 +11,12 @@ from zope.i18n import translate
 from zope.interface import implements
 
 
-class CombinedActionsWorkflowMenu( menu.ActionsMenu, menu.WorkflowMenu ):
+class CombinedActionsWorkflowMenu(menu.ActionsMenu, menu.WorkflowMenu):
     """ Combines the default actions- and the default workflow menu
     """
-    implements( menu.IActionsMenu, menu.IWorkflowMenu )
+    implements(menu.IActionsMenu, menu.IWorkflowMenu)
 
-    def getMenuItems( self, context, request ):
+    def getMenuItems(self, context, request):
         # action menu items
         action_items = self.getActionsMenuItems(
             context, request
@@ -26,7 +26,7 @@ class CombinedActionsWorkflowMenu( menu.ActionsMenu, menu.WorkflowMenu ):
         workflow_items = self.getWorkflowMenuItems(
             context, request
             )
-        if len( workflow_items )>0:
+        if len(workflow_items) > 0:
             workflow_items[0]['extra']['separator'] = 'actionSeparator'
 
         return action_items + workflow_items
@@ -47,7 +47,7 @@ class CombinedActionsWorkflowMenu( menu.ActionsMenu, menu.WorkflowMenu ):
         if IActionProvider.providedBy(provider):
             type_actions = provider.listActionInfos(object=aq_inner(context))
             type_actions = [action for action in type_actions
-                            if action.get('category')=='object_buttons']
+                            if action.get('category') == 'object_buttons']
             editActions.extend(type_actions)
 
         if not editActions:
@@ -64,16 +64,17 @@ class CombinedActionsWorkflowMenu( menu.ActionsMenu, menu.WorkflowMenu ):
                 if icon:
                     icon = '%s/%s' % (portal_url, icon)
 
-                results.append({ 'title'       : action['title'],
-                                 'description' : '',
-                                 'action'      : action['url'],
-                                 'selected'    : False,
-                                 'icon'        : icon,
-                                 'extra'       : {'id': action['id'],
-                                                  'separator': None,
-                                                  'class': cssClass},
-                                 'submenu'     : None,
-                                 })
+                results.append({
+                        'title': action['title'],
+                        'description': '',
+                        'action': action['url'],
+                        'selected': False,
+                        'icon': icon,
+                        'extra': {'id': action['id'],
+                                   'separator': None,
+                                   'class': cssClass},
+                         'submenu': None,
+                         })
 
         # order the actions
         results.sort(lambda aa, bb:
@@ -81,7 +82,6 @@ class CombinedActionsWorkflowMenu( menu.ActionsMenu, menu.WorkflowMenu ):
                              translate(bb.get('title', ''), context=request)))
 
         return results
-
 
     # workflow menu items
     # 'advanced...' and 'policy...' items are only visible for managers
@@ -122,58 +122,58 @@ class CombinedActionsWorkflowMenu( menu.ActionsMenu, menu.WorkflowMenu ):
                         actionUrl = context.absolute_url() + \
                             '/content_status_modify?workflow_action=' + \
                             action['id']
-                        cssClass =''
+                        cssClass = ''
                     break
 
             if action['allowed']:
                 results.append({
-                        'title'       : action['title'],
-                        'description' : description,
-                        'action'      : actionUrl,
-                        'selected'    : False,
-                        'icon'        : None,
-                        'extra'       : {'id': 'workflow-transition-'+\
-                                             action['id'],
-                                         'separator': None,
-                                         'class': cssClass},
-                        'submenu'     : None,
+                        'title': action['title'],
+                        'description': description,
+                        'action': actionUrl,
+                        'selected': False,
+                        'icon': None,
+                        'extra': {'id': 'workflow-transition-' + \
+                                      action['id'],
+                                  'separator': None,
+                                  'class': cssClass},
+                        'submenu': None,
                         })
 
         url = context.absolute_url()
 
         if len(results) > 0 and _checkPermission('Manage portal', context):
-            results.append({ 'title'        : _(u'label_advanced',
-                                                default=u'Advanced...'),
-                             'description'  : '',
-                             'action'       : url + '/content_status_history',
-                             'selected'     : False,
-                             'icon'         : None,
-                             'extra'        : {'id': 'advanced',
-                                               'separator': 'actionSeparator',
-                                               'class': 'kssIgnore'},
-                             'submenu'      : None,
+            results.append({
+                    'title': _(u'label_advanced', default=u'Advanced...'),
+                    'description': '',
+                    'action': url + '/content_status_history',
+                    'selected': False,
+                    'icon': None,
+                    'extra': {'id': 'advanced',
+                              'separator': 'actionSeparator',
+                              'class': 'kssIgnore'},
+                    'submenu': None,
                              })
 
         if getToolByName(context, 'portal_placeful_workflow', None) != None \
                 and _checkPermission('Manage portal', context):
-            results.append({ 'title'       : _(u'workflow_policy',
-                                               default=u'Policy...'),
-                             'description' : '',
-                             'action'      : url + \
-                                 '/placeful_workflow_configuration',
-                             'selected'    : False,
-                             'icon'        : None,
-                             'extra'       : {'id': 'policy',
-                                              'separator': None,
-                                              'class': 'kssIgnore'},
-                             'submenu'     : None,
+            results.append({
+                    'title': _(u'workflow_policy', default=u'Policy...'),
+                    'description': '',
+                    'action': url + '/placeful_workflow_configuration',
+                    'selected': False,
+                    'icon': None,
+                    'extra': {'id': 'policy',
+                                     'separator': None,
+                                     'class': 'kssIgnore'},
+                    'submenu': None,
                              })
 
         return results
 
-class CombinedActionsWorkflowSubMenuItem( menu.ActionsSubMenuItem,
-                                          menu.WorkflowSubMenuItem ):
-    implements( menu.IActionsSubMenuItem, menu.IWorkflowSubMenuItem )
+
+class CombinedActionsWorkflowSubMenuItem(menu.ActionsSubMenuItem,
+                                         menu.WorkflowSubMenuItem):
+    implements(menu.IActionsSubMenuItem, menu.IWorkflowSubMenuItem)
 
     # @memoize
     def available(self):
@@ -183,8 +183,9 @@ class CombinedActionsWorkflowSubMenuItem( menu.ActionsSubMenuItem,
 
 class FtwFactoriesSubMenuItem(menu.FactoriesSubMenuItem):
     """A ftw.contetmenu specific plone.contentmenu.factories adapter,
-    which overrides the available method, so that it realy checks the menu items.
-    Instead of the original method wich only count the addable types."""
+    which overrides the available method, so that it realy checks the
+    menu items. Instead of the original method wich only count the
+    addable types."""
 
     implements(IFactoriesSubMenuItem)
 
@@ -208,7 +209,7 @@ class FactoriesMenu(menu.FactoriesMenu):
         if IActionProvider.providedBy(provider):
             type_actions = provider.listActionInfos(object=aq_inner(context))
             type_actions = [action for action in type_actions
-                            if action.get('category')=='folder_factories']
+                            if action.get('category') == 'folder_factories']
 
         if type_actions:
             # WARNING: use of portal_actionicons is deprecated!
@@ -228,21 +229,28 @@ class FactoriesMenu(menu.FactoriesMenu):
                         if icon:
                             icon = '%s/%s' % (portal_url, icon)
 
-                    factories.append({ 'title'       : action['title'],
-                                       'description' : '',
-                                       'action'      : action['url'],
-                                       'selected'    : False,
-                                       'icon'        : icon,
-                                       'extra'       : {'id': action['id'],
-                                                        'separator': None,
-                                                        'class': cssClass},
-                                       'submenu'     : None,
-                                       })
+                    factories.append({
+                            'title': action['title'],
+                            'description': '',
+                            'action': action['url'],
+                            'selected': False,
+                            'icon': icon,
+                            'extra': {'id': action['id'],
+                                             'separator': None,
+                                             'class': cssClass},
+                           'submenu': None,
+                           })
 
         # order the actions
-        factories.sort(lambda aa, bb:
-                           cmp(translate(aa.get('title', ''), domain='opengever.dossier', context=request),
-                               translate(bb.get('title', ''), domain='opengever.dossier', context=request)))
+        factories.sort(
+            lambda aa, bb:
+                cmp(
+                translate(aa.get('title', ''),
+                          domain='opengever.dossier',
+                          context=request),
+                translate(bb.get('title', ''),
+                          domain='opengever.dossier',
+                          context=request)))
 
         return self._post_cleanup_factories(context, request, factories)
 
