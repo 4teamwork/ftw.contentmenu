@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2010-09-22 08:42+0000\n"
+"POT-Creation-Date: 2010-09-20 14:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,21 +14,18 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: DOMAIN\n"
 
-msgid "Manage categories"
-msgstr "Kategorien bearbeiten"
-
 #. Default: "Views"
 #: ftw.contentmenu/ftw/contentmenu/browser/contentviews.pt:8
 msgid "heading_views"
-msgstr "Ansichten"
+msgstr "Vues"
 
 #. Default: "Advanced..."
 #: ftw.contentmenu/ftw/contentmenu/menu.py:121
 msgid "label_advanced"
-msgstr "Erweitert"
+msgstr "Avancé"
 
 #. Default: "Policy..."
 #: ftw.contentmenu/ftw/contentmenu/menu.py:132
 msgid "workflow_policy"
-msgstr "Richtlinie"
+msgstr "Directive"
 

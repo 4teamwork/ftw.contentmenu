@@ -5,6 +5,9 @@ Changelog
 2.1 (unreleased)
 ----------------
 
+- Added some french translations
+  [ttschanz]
+
 - Added a specific plone.contentmenu.factories adapter, which make the menu only
   available, when some action items realy exists in the menu item.
   Issue #1371 Anpassungen Aufgaben Workflow
