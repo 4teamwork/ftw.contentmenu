@@ -8,10 +8,8 @@ Changelog
 - Added some french translations
   [ttschanz]
 
-- Added a specific plone.contentmenu.factories adapter, which make the menu only
-  available, when some action items realy exists in the menu item.
-  Issue #1371 Anpassungen Aufgaben Workflow
-  https://extranet.4teamwork.ch/projects/opengever-kanton-zug/sprint-backlog/1371
+- Added a specific plone.contentmenu.factories adapter, which makes the menu only
+  available, when some action items really exists in the menu item.
   [phgross]
 
 
