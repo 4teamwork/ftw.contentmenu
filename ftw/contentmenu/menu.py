@@ -190,6 +190,9 @@ class FtwFactoriesSubMenuItem(menu.FactoriesSubMenuItem):
     implements(IFactoriesSubMenuItem)
 
     def available(self):
+        if self._addingToParent() and not self.context_state.is_default_page():
+            return False
+
         menu = getMenu(self.submenuId, self.context, self.request)
         return len(menu) > 0
 
@@ -200,6 +203,7 @@ class FactoriesMenu(menu.FactoriesMenu):
 
     def getMenuItems(self, context, request):
         # get standard factory types
+
         factories = super(FactoriesMenu, self).getMenuItems(context, request)
 
         # get factory actions from 'portal_types' action provider

@@ -5,7 +5,9 @@ Changelog
 2.0.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fixed specific plone.contentmenu.factories adapter:
+  Add check if _addingToParent, works now also for non-folderish types.
+  [phgross]
 
 
 2.0.2 (2012-02-28)
