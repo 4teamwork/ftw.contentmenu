@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-2.0.2 (unreleased)
+2.0.2 (2012-02-28)
 ------------------
 
 - Adjsut MANIFEST.in: Add include for rst files.
