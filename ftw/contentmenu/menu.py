@@ -5,6 +5,7 @@ from Products.CMFPlone import PloneMessageFactory as _
 from ftw.contentmenu.interfaces import IContentmenuPostFactoryMenu
 from plone.app.contentmenu import menu
 from plone.app.contentmenu.interfaces import IFactoriesSubMenuItem
+from plone.app.contentmenu.interfaces import IWorkflowSubMenuItem
 from zope.app.publisher.browser.menu import getMenu
 from zope.component import queryMultiAdapter, getMultiAdapter
 from zope.i18n import translate
@@ -174,6 +175,7 @@ class CombinedActionsWorkflowMenu(menu.ActionsMenu, menu.WorkflowMenu):
 class CombinedActionsWorkflowSubMenuItem(menu.ActionsSubMenuItem,
                                          menu.WorkflowSubMenuItem):
     implements(menu.IActionsSubMenuItem, menu.IWorkflowSubMenuItem)
+    submenuId = 'ftw_contentmenu_actions'
 
     # @memoize
     def available(self):
@@ -181,13 +183,14 @@ class CombinedActionsWorkflowSubMenuItem(menu.ActionsSubMenuItem,
         return len(menu) > 0
 
 
-class FtwFactoriesSubMenuItem(menu.FactoriesSubMenuItem):
+class FactoriesSubMenuItem(menu.FactoriesSubMenuItem):
     """A ftw.contetmenu specific plone.contentmenu.factories adapter,
     which overrides the available method, so that it realy checks the
     menu items. Instead of the original method wich only count the
     addable types."""
 
     implements(IFactoriesSubMenuItem)
+    submenuId = 'ftw_contentmenu_factory'
 
     def available(self):
         if self._addingToParent() and not self.context_state.is_default_page():
@@ -270,3 +273,12 @@ class FactoriesMenu(menu.FactoriesMenu):
             return adpt(factories)
         else:
             return factories
+
+
+class WorkflowSubMenuItem(menu.WorkflowSubMenuItem):
+    """A workflow menu that is always unavailable.
+    """
+    implements(IWorkflowSubMenuItem)
+
+    def available(self):
+        return False

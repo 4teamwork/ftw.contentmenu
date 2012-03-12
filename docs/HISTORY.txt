@@ -5,6 +5,9 @@ Changelog
 2.1 (unreleased)
 ----------------
 
+- Replaced all overrides with more specific adapters for our browser layer.
+  [buchi]
+
 - Make ftw.contentmenu behave more like default Plone by removing the 
   ftw.contentviews viewlet and using the default plone.contentviews and 
   plone.contentactions viewlets instead. There's an upgrade step to unhide 
