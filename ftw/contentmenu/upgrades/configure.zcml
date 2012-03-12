@@ -1,0 +1,24 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:gs="http://namespaces.zope.org/genericsetup"
+    i18n_domain="ftw.contentmenu">
+
+    <gs:registerProfile
+        name="to_v2100"
+        title="Upgrade profile for ftw.contentmenu"
+        description="This profile upgrades ftw.contentmenu to version 2.1."
+        directory="profiles/to_v2100"
+        for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
+
+    <gs:upgradeStep
+        title="Upgrade profile for ftw.contentmenu"
+        description="Imports to_v2100 profile."
+        source="1"
+        destination="2100"
+        handler="ftw.contentmenu.upgrades.to_v2100"
+        profile="ftw.contentmenu:default"
+        />
+
+</configure>

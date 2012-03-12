@@ -7,7 +7,7 @@
     xmlns:i18n="http://namespaces.zope.org/i18n"
     i18n_domain="ftw.contentmenu">
 
-	<!-- Register the installation GenericSetup extension profile -->
+    <!-- Register the installation GenericSetup extension profile -->
     <genericsetup:registerProfile
       name="default"
       title="ftw.contentmenu"
@@ -17,9 +17,9 @@
       />
 
     <i18n:registerTranslations directory="locales" />
-    
-	<include package=".browser" />
-	
+
+    <include package=".upgrades" />
+
     <includePluginsOverrides package="." file="overrides.zcml" />
-	
+
 </configure>

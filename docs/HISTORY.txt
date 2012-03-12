@@ -2,10 +2,14 @@ Changelog
 =========
 
 
-2.0.4 (unreleased)
-------------------
+2.1 (unreleased)
+----------------
 
-- Nothing changed yet.
+- Make ftw.contentmenu behave more like default Plone by removing the 
+  ftw.contentviews viewlet and using the default plone.contentviews and 
+  plone.contentactions viewlets instead. There's an upgrade step to unhide 
+  default viewlets and to remove custom css.
+  [buchi]
 
 
 2.0.3 (2012-02-28)

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<object>
+ <order manager="plone.belowcontenttitle" skinname="Plone Default">
+  <viewlet name="ftw.contentviews" remove="True"/>
+ </order>
+ <hidden manager="plone.contentviews" skinname="Plone Default">
+  <viewlet name="plone.contentviews" remove="True"/>
+  <viewlet name="plone.contentactions" remove="True"/>
+ </hidden>
+</object>
