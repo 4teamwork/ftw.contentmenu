@@ -33,7 +33,7 @@ class TestActionsMenu(PloneTestCase):
 
     def afterSetUp(self):
         self.folder.invokeFactory('Document', 'doc1')
-        self.menu = getUtility(IBrowserMenu, name='plone_contentmenu_actions',
+        self.menu = getUtility(IBrowserMenu, name='ftw_contentmenu_actions',
                                context=self.folder)
         self.request = self.app.REQUEST
         # add a 'object_buttons' action to the 'Folder' fti
@@ -80,7 +80,7 @@ class TestFactoriesMenu(PloneTestCase):
 
     def afterSetUp(self):
         self.folder.invokeFactory('Document', 'doc1')
-        self.menu = getUtility(IBrowserMenu, name='plone_contentmenu_factory',
+        self.menu = getUtility(IBrowserMenu, name='ftw_contentmenu_factory',
                                context=self.folder)
         self.request = self.app.REQUEST
 
