@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-2.1 (unreleased)
+2.1 (2012-03-13)
 ----------------
 
 - Replaced all overrides with more specific adapters for our browser layer.
