@@ -249,15 +249,8 @@ class FactoriesMenu(menu.FactoriesMenu):
                            })
 
         # order the actions
-        factories.sort(
-            lambda aa, bb:
-                cmp(
-                translate(aa.get('title', ''),
-                          domain='opengever.dossier',
-                          context=request),
-                translate(bb.get('title', ''),
-                          domain='opengever.dossier',
-                          context=request)))
+        factories.sort(key=lambda x: translate(x.get('title', u''),
+                                               context=request))
 
         return self._post_cleanup_factories(context, request, factories)
 
