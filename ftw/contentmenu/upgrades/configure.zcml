@@ -4,20 +4,20 @@
     i18n_domain="ftw.contentmenu">
 
     <gs:registerProfile
-        name="to_v2100"
+        name="to_v2001"
         title="Upgrade profile for ftw.contentmenu"
         description="This profile upgrades ftw.contentmenu to version 2.1."
-        directory="profiles/to_v2100"
+        directory="profiles/to_v2001"
         for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
         />
 
     <gs:upgradeStep
         title="Upgrade profile for ftw.contentmenu"
-        description="Imports to_v2100 profile."
+        description="Imports to_v2001 profile."
         source="1"
-        destination="2100"
-        handler="ftw.contentmenu.upgrades.to_v2100"
+        destination="2001"
+        handler="ftw.contentmenu.upgrades.to_v2001"
         profile="ftw.contentmenu:default"
         />
 
