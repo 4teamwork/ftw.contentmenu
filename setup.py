@@ -11,7 +11,7 @@ tests_require = [
 
 setup(name='ftw.contentmenu',
       version=version,
-      description='A replacement for plone.app.contentmenu',
+      description="Customize Plone's content menu",
       long_description=open('README.rst').read() + '\n' + \
           open(os.path.join('docs', 'HISTORY.txt')).read(),
 

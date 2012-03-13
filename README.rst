@@ -1,24 +1,32 @@
-ftw.contentmenu
-===============
+Introduction
+============
 
-ftw.contentmenu replaces the default plone contentmenu. It is ment for
-intranet sites. The menu is positioned below the title of the current content.
-The workflow menu is disabled, instead worklfow action are displayed in the
-actions menu.
+``ftw.contentmenu`` customizes Plone's content menu in the following way:
+
+* The workflow menu is removed. Workflow actions are displayed in 
+  the actions menu instead.
+
+* The Add... menu (aka folder factories) can additionally display actions
+  having the category ``folder_factories``.
+
+* The Add... menu can be customized further by providing a specific adapter
+  which can modify the list of factory items.
 
 
-Usage
-=====
+Installation
+============
 
-Add ``ftw.contentmenu`` to your buildout configuration:
+Install ``ftw.contentmenu`` by adding it to the list of eggs in your buildout or by adding it as a dependency of your policy package. Then run buildout and
+restart your instance.
 
 ::
 
   [instance]
   eggs =
-    ftw.contenmenu
+      ftw.contenmenu
 
-
+Go to Site Setup of your Plone site and activate the ``ftw.contentmenu``
+add-on.
 
 Links
 =====
@@ -29,8 +37,12 @@ Links
 - Continuous Integration: https://jenkins.4teamwork.ch/job/ftw.contentmenu/
 
 
-Maintainer
-==========
+Copyright and License
+=====================
 
-This package is produced and maintained by `4teamwork <http://www.4teamwork.ch/>`_ company.
+This package is copyright by `4teamwork GmbH <http://www.4teamwork.ch/>`_
 
+``ftw.contentmenu`` is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.

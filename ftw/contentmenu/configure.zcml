@@ -12,7 +12,7 @@
       name="default"
       title="ftw.contentmenu"
       directory="profiles/default"
-      description="A replacement for plone.app.contentmenu"
+      description="Customize Plone's content menu"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
