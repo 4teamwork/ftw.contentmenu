@@ -7,6 +7,7 @@ maintainer = 'Thomas Buchberger'
 tests_require = [
     'zope.testing',
     'collective.testcaselayer',
+    'Products.PloneTestCase'
     ]
 
 setup(name='ftw.contentmenu',
