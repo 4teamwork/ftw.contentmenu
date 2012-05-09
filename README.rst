@@ -36,15 +36,12 @@ Links
 - Main github project repository: https://github.com/4teamwork/ftw.contentmenu
 - Issue tracker: https://github.com/4teamwork/ftw.contentmenu/issues
 - Package on pypi: http://pypi.python.org/pypi/ftw.contentmenu
-- Continuous Integration: https://jenkins.4teamwork.ch/job/ftw.contentmenu/
+- Continuous integration: https://jenkins.4teamwork.ch/search?q=ftw.contentmenu
 
 
-Copyright and License
-=====================
+Copyright
+=========
 
-This package is copyright by `4teamwork GmbH <http://www.4teamwork.ch/>`_
+This package is copyright by `4teamwork <http://www.4teamwork.ch/>`_.
 
-``ftw.contentmenu`` is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+``ftw.contentmenu`` is licensed under GNU General Public License, version 2.
