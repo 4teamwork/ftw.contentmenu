@@ -5,9 +5,7 @@ version = '2.1.1.dev0'
 maintainer = 'Thomas Buchberger'
 
 tests_require = [
-    'zope.testing',
-    'collective.testcaselayer',
-    'Products.PloneTestCase'
+    'plone.app.testing',
     ]
 
 setup(name='ftw.contentmenu',
