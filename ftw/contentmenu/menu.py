@@ -6,7 +6,6 @@ from ftw.contentmenu.interfaces import IContentmenuPostFactoryMenu
 from plone.app.contentmenu import menu
 from plone.app.contentmenu.interfaces import IFactoriesSubMenuItem
 from plone.app.contentmenu.interfaces import IWorkflowSubMenuItem
-from zope.app.publisher.browser.menu import getMenu
 from zope.component import queryMultiAdapter, getMultiAdapter
 from zope.i18n import translate
 from zope.interface import implements
@@ -36,52 +35,47 @@ class CombinedActionsWorkflowMenu(menu.ActionsMenu, menu.WorkflowMenu):
         """Return menu item entries in a TAL-friendly form."""
         results = []
 
-        portal_state = getMultiAdapter((context, request),
-                                       name='plone_portal_state')
-
-        actions_tool = getToolByName(aq_inner(context), 'portal_actions')
-        editActions = actions_tool.listActionInfos(
-            object=aq_inner(context), categories=('object_buttons',))
+        context_state = getMultiAdapter((context, request),
+            name='plone_context_state')
+        edit_actions = context_state.actions('object_buttons')
 
         # include actions from 'portal_types' provider
+        actions_tool = getToolByName(context, 'portal_actions')
         provider = getattr(actions_tool, 'portal_types', None)
         if IActionProvider.providedBy(provider):
-            type_actions = provider.listActionInfos(object=aq_inner(context))
-            type_actions = [action for action in type_actions
-                            if action.get('category') == 'object_buttons']
-            editActions.extend(type_actions)
+            type_actions = provider.listActionInfos(object=aq_inner(context),
+                           category='object_buttons')
+            edit_actions.extend(type_actions)
 
-        if not editActions:
-            return []
+        if not edit_actions:
+            return results
 
-        plone_utils = getToolByName(context, 'plone_utils')
-        portal_url = portal_state.portal_url()
+        actionicons = getToolByName(context, 'portal_actionicons')
+        portal_url = getToolByName(context, 'portal_url')()
 
-        for action in editActions:
+        for action in edit_actions:
             if action['allowed']:
-                cssClass = 'actionicon-object_buttons-%s' % action['id']
-                icon = plone_utils.getIconFor('object_buttons', action['id'],
-                                              None)
-                if icon:
-                    icon = '%s/%s' % (portal_url, icon)
+                aid = action['id']
+                cssClass = 'actionicon-object_buttons-%s' % aid
+                icon = action.get('icon', None)
+                if not icon:
+                    # allow fallback to action icons tool
+                    icon = actionicons.queryActionIcon('object_buttons', aid)
+                    if icon:
+                        icon = '%s/%s' % (portal_url, icon)
 
-                results.append({
-                        'title': action['title'],
-                        'description': '',
-                        'action': action['url'],
-                        'selected': False,
-                        'icon': icon,
-                        'extra': {'id': action['id'],
-                                   'separator': None,
-                                   'class': cssClass},
-                         'submenu': None,
-                         })
+                results.append({ 'title'       : action['title'],
+                                 'description' : '',
+                                 'action'      : action['url'],
+                                 'selected'    : False,
+                                 'icon'        : icon,
+                                 'extra'       : {'id': aid, 
+                                                  'separator': None,
+                                                  'class': cssClass},
+                                 'submenu'     : None,
+                                 })
 
-        # order the actions
-        results.sort(lambda aa, bb:
-                         cmp(translate(aa.get('title', ''), context=request),
-                             translate(bb.get('title', ''), context=request)))
-
+        results.sort(key=lambda x: translate(x['title'], context=request))
         return results
 
     # workflow menu items
@@ -174,20 +168,34 @@ class CombinedActionsWorkflowMenu(menu.ActionsMenu, menu.WorkflowMenu):
 
 class CombinedActionsWorkflowSubMenuItem(menu.ActionsSubMenuItem,
                                          menu.WorkflowSubMenuItem):
+    """The menu item linking to the actions menu."""
+
     implements(menu.IActionsSubMenuItem, menu.IWorkflowSubMenuItem)
     submenuId = 'ftw_contentmenu_actions'
 
-    # @memoize
     def available(self):
-        menu = getMenu(self.submenuId, self.context, self.request)
-        return len(menu) > 0
+        actions_tool = getToolByName(self.context, 'portal_actions')
+        edit_actions = actions_tool.listActionInfos(object=self.context,
+            categories=('object_buttons',), max=1)
+        if len(edit_actions) > 0:
+            return True
+
+        provider = getattr(actions_tool, 'portal_types', None)
+        if IActionProvider.providedBy(provider):
+            type_actions = provider.listActionInfos(object=self.context,
+                category='object_buttons', max=1)
+            if len(type_actions) > 0:
+                return True
+
+        context_state = getMultiAdapter((self.context, self.request),
+                                        name='plone_context_state')
+        if context_state.workflow_state() is not None:
+            return True
+        return False
 
 
 class FactoriesSubMenuItem(menu.FactoriesSubMenuItem):
-    """A ftw.contetmenu specific plone.contentmenu.factories adapter,
-    which overrides the available method, so that it realy checks the
-    menu items. Instead of the original method wich only count the
-    addable types."""
+    """The menu item linking to the factories menu."""
 
     implements(IFactoriesSubMenuItem)
     submenuId = 'ftw_contentmenu_factory'
@@ -195,9 +203,20 @@ class FactoriesSubMenuItem(menu.FactoriesSubMenuItem):
     def available(self):
         if self._addingToParent() and not self.context_state.is_default_page():
             return False
+        if len(self._itemsToAdd()) > 0:
+            return True
+        if self._showConstrainOptions():
+            return True
 
-        menu = getMenu(self.submenuId, self.context, self.request)
-        return len(menu) > 0
+        actions_tool = getToolByName(self.context, 'portal_actions')
+        provider = getattr(actions_tool, 'portal_types', None)
+        if IActionProvider.providedBy(provider):
+            type_actions = provider.listActionInfos(object=self.context,
+                           category='folder_factories', max=1)
+            if len(type_actions) > 0:
+                return True
+
+        return False
 
 
 class FactoriesMenu(menu.FactoriesMenu):
@@ -206,17 +225,15 @@ class FactoriesMenu(menu.FactoriesMenu):
 
     def getMenuItems(self, context, request):
         # get standard factory types
-
         factories = super(FactoriesMenu, self).getMenuItems(context, request)
 
         # get factory actions from 'portal_types' action provider
+        type_actions = []
         actions_tool = getToolByName(aq_inner(context), 'portal_actions')
         provider = getattr(actions_tool, 'portal_types', None)
-        type_actions = []
         if IActionProvider.providedBy(provider):
-            type_actions = provider.listActionInfos(object=aq_inner(context))
-            type_actions = [action for action in type_actions
-                            if action.get('category') == 'folder_factories']
+            type_actions = provider.listActionInfos(object=context,
+                           category='folder_factories')
 
         if type_actions:
             # WARNING: use of portal_actionicons is deprecated!

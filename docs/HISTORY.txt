@@ -8,6 +8,10 @@ Changelog
 - Use plone.app.testing instead of collective.testcaselayer.
   [buchi]
 
+- Improved performance by optimizing availability checks and the way the
+  actions and factories menus get their items.
+  [buchi]
+
 
 2.1 (2012-03-13)
 ----------------
