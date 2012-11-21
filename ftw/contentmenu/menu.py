@@ -56,16 +56,16 @@ class CombinedActionsWorkflowMenu(menu.ActionsMenu, menu.WorkflowMenu):
                     if icon:
                         icon = '%s/%s' % (portal_url, icon)
 
-                results.append({ 'title'       : action['title'],
-                                 'description' : '',
-                                 'action'      : action['url'],
-                                 'selected'    : False,
-                                 'icon'        : icon,
-                                 'extra'       : {'id': aid,
-                                                  'separator': None,
-                                                  'class': cssClass},
-                                 'submenu'     : None,
-                                 })
+                results.append({
+                        'title': action['title'],
+                        'description': '',
+                        'action': action['url'],
+                        'selected': False,
+                        'icon': icon,
+                        'extra': {'id': aid,
+                                  'separator': None,
+                                  'class': cssClass},
+                        'submenu': None, })
 
         results.sort(key=lambda x: translate(x['title'], context=request))
         return results
@@ -119,7 +119,7 @@ class CombinedActionsWorkflowMenu(menu.ActionsMenu, menu.WorkflowMenu):
                         'action': actionUrl,
                         'selected': False,
                         'icon': None,
-                        'extra': {'id': 'workflow-transition-' + \
+                        'extra': {'id': 'workflow-transition-' +
                                       action['id'],
                                   'separator': None,
                                   'class': cssClass},
@@ -141,7 +141,8 @@ class CombinedActionsWorkflowMenu(menu.ActionsMenu, menu.WorkflowMenu):
                     'submenu': None,
                              })
 
-        if getToolByName(context, 'portal_placeful_workflow', None) != None \
+        if getToolByName(
+            context, 'portal_placeful_workflow', None) is not None \
                 and _checkPermission('Manage portal', context):
             results.append({
                     'title': _(u'workflow_policy', default=u'Policy...'),
@@ -254,7 +255,7 @@ class FactoriesMenu(menu.FactoriesMenu):
                             'extra': {'id': action['id'],
                                              'separator': None,
                                              'class': cssClass},
-                           'submenu': None,
+                            'submenu': None,
                            })
 
         # order the actions
