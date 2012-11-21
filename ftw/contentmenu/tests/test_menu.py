@@ -41,6 +41,14 @@ class TestActionsMenu(unittest.TestCase):
         wtool = getToolByName(self.portal, 'portal_workflow')
         wtool.setDefaultChain('simple_publication_workflow')
 
+        # add fake action in the atfolder fti
+        ttool = getToolByName(self.portal, 'portal_types')
+        folder_fti = ttool.get('Folder')
+        folder_fti.addAction(
+            id='fake_action', name='Fake Action',
+            action='string:${object_url}', condition='', permission=(),
+            category='object_buttons', visible=True, icon_expr='', link_target='')
+
         self.folder = self.portal[self.portal.invokeFactory('Folder',
                                                             'folder')]
         self.folder.invokeFactory('Document', 'doc1')
@@ -54,7 +62,10 @@ class TestActionsMenu(unittest.TestCase):
 
     def test_actions_menu_items(self):
         actions = self.menu.getActionsMenuItems(self.folder, self.request)
-        self.assertIn('copy', [a['extra']['id'] for a in actions])
+        action_ids = [a['extra']['id'] for a in actions]
+
+        self.assertIn('copy', action_ids)
+        self.assertTrue(len(action_ids) == len(set(action_ids)))
 
     def test_actionsmenu_items_from_typestool(self):
         # add a 'object_buttons' action to the 'Folder' fti

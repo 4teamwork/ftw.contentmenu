@@ -39,14 +39,6 @@ class CombinedActionsWorkflowMenu(menu.ActionsMenu, menu.WorkflowMenu):
             name='plone_context_state')
         edit_actions = context_state.actions('object_buttons')
 
-        # include actions from 'portal_types' provider
-        actions_tool = getToolByName(context, 'portal_actions')
-        provider = getattr(actions_tool, 'portal_types', None)
-        if IActionProvider.providedBy(provider):
-            type_actions = provider.listActionInfos(object=aq_inner(context),
-                           category='object_buttons')
-            edit_actions.extend(type_actions)
-
         if not edit_actions:
             return results
 
@@ -69,7 +61,7 @@ class CombinedActionsWorkflowMenu(menu.ActionsMenu, menu.WorkflowMenu):
                                  'action'      : action['url'],
                                  'selected'    : False,
                                  'icon'        : icon,
-                                 'extra'       : {'id': aid, 
+                                 'extra'       : {'id': aid,
                                                   'separator': None,
                                                   'class': cssClass},
                                  'submenu'     : None,

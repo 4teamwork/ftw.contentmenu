@@ -5,6 +5,10 @@ Changelog
 2.1.1 (unreleased)
 ------------------
 
+- Fixed actionmenuItems getter to avoid double entries of
+  type_tool actions.
+  [phgross]
+
 - Use plone.app.testing instead of collective.testcaselayer.
   [buchi]
 
@@ -19,9 +23,9 @@ Changelog
 - Replaced all overrides with more specific adapters for our browser layer.
   [buchi]
 
-- Make ftw.contentmenu behave more like default Plone by removing the 
-  ftw.contentviews viewlet and using the default plone.contentviews and 
-  plone.contentactions viewlets instead. There's an upgrade step to unhide 
+- Make ftw.contentmenu behave more like default Plone by removing the
+  ftw.contentviews viewlet and using the default plone.contentviews and
+  plone.contentactions viewlets instead. There's an upgrade step to unhide
   default viewlets and to remove custom css.
   [buchi]
 
