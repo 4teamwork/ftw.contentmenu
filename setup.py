@@ -2,7 +2,6 @@ from setuptools import setup, find_packages
 import os
 
 version = '2.2.1.dev0'
-maintainer = 'Thomas Buchberger'
 
 tests_require = [
     'unittest2',
@@ -30,7 +29,6 @@ setup(name='ftw.contentmenu',
       keywords='ftw contentmenu plone',
       author='4teamwork GmbH',
       author_email='mailto:info@4teamwork.ch',
-      maintainer=maintainer,
       url='https://github.com/4teamwork/ftw.contentmenu',
       license='GPL2',
 
