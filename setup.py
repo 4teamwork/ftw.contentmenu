@@ -5,7 +5,10 @@ version = '2.2.1.dev0'
 maintainer = 'Thomas Buchberger'
 
 tests_require = [
+    'unittest2',
     'plone.app.testing',
+    'zope.app.publisher',
+    'zope.configuration',
     ]
 
 setup(name='ftw.contentmenu',
@@ -38,7 +41,19 @@ setup(name='ftw.contentmenu',
 
       install_requires=[
         'setuptools',
-        # -*- Extra requirements: -*-
+
+        # Zope
+        'Acquisition',
+        'zope.component',
+        'zope.i18n',
+        'zope.interface',
+
+        # Plone
+        'plone.app.contentmenu',
+        'plone.app.upgrade',
+        'Products.CMFCore',
+        'Products.CMFPlone',
+
         ],
       tests_require=tests_require,
       extras_require=dict(tests=tests_require),
