@@ -5,7 +5,8 @@ Changelog
 2.2.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- onegov.ch approved: add badge to readme.
+  [jone]
 
 
 2.2 (2012-11-28)

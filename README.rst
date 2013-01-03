@@ -5,6 +5,12 @@ Introduction
 
 ``ftw.contentmenu`` customizes Plone's content menu in the following way:
 
+.. figure:: http://onegov.ch/approved.png/image
+   :align: right
+   :target: http://onegov.ch/community/zertifizierte-module/ftw.contentmenu
+
+   Certified: 01/2013
+
 * The workflow menu is removed. Workflow actions are displayed in 
   the actions menu instead.
 
