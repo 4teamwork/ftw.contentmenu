@@ -11,7 +11,7 @@ Introduction
 
    Certified: 01/2013
 
-* The workflow menu is removed. Workflow actions are displayed in 
+* The workflow menu is removed. Workflow actions are displayed in
   the actions menu instead.
 
 * The Add... menu (aka folder factories) can additionally display actions
@@ -35,6 +35,13 @@ restart your instance.
 
 Go to Site Setup of your Plone site and activate the ``ftw.contentmenu``
 add-on.
+
+
+Compatibility
+=============
+
+Runs with `Plone <http://www.plone.org/>`_ `4.1`, `4.2` or `4.3`.
+
 
 Links
 =====
