@@ -58,3 +58,7 @@ Copyright
 This package is copyright by `4teamwork <http://www.4teamwork.ch/>`_.
 
 ``ftw.contentmenu`` is licensed under GNU General Public License, version 2.
+
+.. image:: https://cruel-carlota.pagodabox.com/2407d07718859742365fd832aac66e8e
+   :alt: githalytics.com
+   :target: http://githalytics.com/4teamwork/ftw.contentmenu
