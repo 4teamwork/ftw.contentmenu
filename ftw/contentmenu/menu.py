@@ -260,6 +260,7 @@ class FactoriesMenu(menu.FactoriesMenu):
 
         # order the actions
         factories.sort(key=lambda x: translate(x.get('title', u''),
+                                               domain='plone',
                                                context=request))
 
         return self._post_cleanup_factories(context, request, factories)
