@@ -71,7 +71,7 @@ class CombinedActionsWorkflowMenu(menu.ActionsMenu, menu.WorkflowMenu):
         return results
 
     # workflow menu items
-    # 'advanced...' and 'policy...' items are only visible for managers
+    # 'policy...' item is only visible for managers
     def getWorkflowMenuItems(self, context, request):
         """Return menu item entries in a TAL-friendly form."""
         results = []
@@ -128,7 +128,7 @@ class CombinedActionsWorkflowMenu(menu.ActionsMenu, menu.WorkflowMenu):
 
         url = context.absolute_url()
 
-        if len(results) > 0 and _checkPermission('Manage portal', context):
+        if len(results) > 0:
             results.append({
                     'title': _(u'label_advanced', default=u'Advanced...'),
                     'description': '',

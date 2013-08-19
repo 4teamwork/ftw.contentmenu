@@ -82,15 +82,6 @@ class TestActionsMenu(unittest.TestCase):
         self.assertIn('workflow-transition-submit',
                       [a['extra']['id'] for a in actions])
 
-    def test_workflowmenu_items_advanced(self):
-        actions = self.menu.getWorkflowMenuItems(self.folder.doc1,
-                                                 self.request)
-        self.assertNotIn('advanced', [a['extra']['id'] for a in actions])
-        setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        actions = self.menu.getWorkflowMenuItems(self.folder.doc1,
-                                                 self.request)
-        self.assertIn('advanced', [a['extra']['id'] for a in actions])
-
 
 class TestFactoriesMenu(unittest.TestCase):
 

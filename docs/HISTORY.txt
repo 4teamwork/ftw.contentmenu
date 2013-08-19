@@ -5,6 +5,9 @@ Changelog
 2.2.2 (unreleased)
 ------------------
 
+- Remove permissioncheck for workflowaction 'advanced'
+  [elioschmutz]
+
 - Sort folder_factories-actions in factories menu translated in Plone domain.
   [jone]
 
