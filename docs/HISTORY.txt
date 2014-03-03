@@ -5,7 +5,8 @@ Changelog
 2.2.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Show extra factory menu items for parent of default page.
+  [maurits]
 
 
 2.2.2 (2013-08-26)
