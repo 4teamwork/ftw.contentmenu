@@ -136,3 +136,14 @@ class TestFactoriesMenu(unittest.TestCase):
         # .. then we should not have any more actions
         actions = self.menu.getMenuItems(self.folder, self.request)
         self.assertEqual(len(actions), 0)
+
+    def test_menu_of_default_page_includes_factory_actions(self):
+        folder_fti = self.portal.portal_types['Folder']
+        folder_fti.addAction('test_factory_action',
+                             'Test Factory Action',
+                             'string:${object_url}', '', '',
+                             'folder_factories')
+        self.folder.default_page = 'doc1'
+        actions = self.menu.getMenuItems(self.folder.doc1, self.request)
+        self.assertIn('test_factory_action',
+                      [a['extra']['id'] for a in actions])
