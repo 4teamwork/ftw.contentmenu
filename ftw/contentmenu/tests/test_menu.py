@@ -76,7 +76,7 @@ class TestActionsMenu(unittest.TestCase):
         actions = self.menu.getActionsMenuItems(self.folder, self.request)
         self.assertIn('tt_test', [a['extra']['id'] for a in actions])
 
-    def test_worklfow_menu_items(self):
+    def test_workflow_menu_items(self):
         actions = self.menu.getWorkflowMenuItems(self.folder.doc1,
                                                  self.request)
         self.assertIn('workflow-transition-submit',
