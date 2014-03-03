@@ -1,4 +1,4 @@
-from Acquisition import aq_inner
+from Acquisition import aq_inner, aq_parent
 from Products.CMFCore.interfaces import IActionProvider
 from Products.CMFCore.utils import getToolByName, _checkPermission
 from Products.CMFPlone import PloneMessageFactory as _
@@ -204,7 +204,13 @@ class FactoriesSubMenuItem(menu.FactoriesSubMenuItem):
         actions_tool = getToolByName(self.context, 'portal_actions')
         provider = getattr(actions_tool, 'portal_types', None)
         if IActionProvider.providedBy(provider):
-            type_actions = provider.listActionInfos(object=self.context,
+            # Get folder_factories of container.
+            context = aq_inner(self.context)
+            if self._addingToParent():
+                container = aq_parent(context)
+            else:
+                container = context
+            type_actions = provider.listActionInfos(object=container,
                            category='folder_factories', max=1)
             if len(type_actions) > 0:
                 return True
@@ -225,7 +231,14 @@ class FactoriesMenu(menu.FactoriesMenu):
         actions_tool = getToolByName(aq_inner(context), 'portal_actions')
         provider = getattr(actions_tool, 'portal_types', None)
         if IActionProvider.providedBy(provider):
-            type_actions = provider.listActionInfos(object=context,
+            # Get folder_factories of container.
+            context_state = getMultiAdapter((context, request),
+                                            name='plone_context_state')
+            if context_state.is_structural_folder():
+                container = context
+            else:
+                container = context_state.folder()
+            type_actions = provider.listActionInfos(object=container,
                            category='folder_factories')
 
         if type_actions:
