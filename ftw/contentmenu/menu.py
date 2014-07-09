@@ -180,10 +180,13 @@ class CombinedActionsWorkflowSubMenuItem(menu.ActionsSubMenuItem,
             if len(type_actions) > 0:
                 return True
 
-        if len(self._transitions()) > 0:
+        if self._has_transitions():
             return True
 
         return False
+
+    def _has_transitions(self):
+        return len(self._transitions()) > 0
 
 
 class FactoriesSubMenuItem(menu.FactoriesSubMenuItem):

@@ -1,6 +1,7 @@
 from ftw.builder import Builder
 from ftw.builder import create
 from ftw.contentmenu.interfaces import IContentmenuPostFactoryMenu
+from ftw.contentmenu.interfaces import IFtwContentmenuSpecific
 from ftw.contentmenu.testing import FTW_CONTENTMENU_INTEGRATION_TESTING
 from plone.app.contentmenu.interfaces import IActionsMenu
 from plone.app.contentmenu.interfaces import IFactoriesMenu
@@ -11,6 +12,7 @@ from zope.app.publisher.interfaces.browser import IBrowserMenu
 from zope.component import getMultiAdapter
 from zope.component import getUtility
 from zope.component import provideAdapter
+from zope.interface import alsoProvides
 from zope.interface import alsoProvides
 from zope.interface import implements
 from zope.interface import Interface
@@ -87,6 +89,31 @@ class TestActionsMenu(unittest.TestCase):
                                                  self.request)
         self.assertIn('workflow-transition-submit',
                       [a['extra']['id'] for a in actions])
+
+
+class TestActionsSubMenu(unittest.TestCase):
+
+    layer = FTW_CONTENTMENU_INTEGRATION_TESTING
+
+    def setUp(self):
+        self.portal = self.layer['portal']
+        self.request = self.portal.REQUEST
+        alsoProvides(self.request, IFtwContentmenuSpecific)
+
+        setRoles(self.portal, TEST_USER_ID, ['Contributor'])
+        self.folder = create(Builder('folder'))
+        self.document = create(Builder('document')
+                               .within(self.folder).titled('doc1'))
+        self.submenu = getMultiAdapter([self.folder, self.request],
+                                       name='plone.contentmenu.actions')
+
+    def test_submenu_is_not_available_by_default(self):
+        self.assertFalse(self.submenu._has_transitions())
+
+    def test_submenu_is_available_for_workflow_actions(self):
+        wtool = getToolByName(self.portal, 'portal_workflow')
+        wtool.setDefaultChain('simple_publication_workflow')
+        self.assertTrue(self.submenu._has_transitions())
 
 
 class TestFactoriesMenu(unittest.TestCase):
