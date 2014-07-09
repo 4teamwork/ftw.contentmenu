@@ -4,8 +4,9 @@ import os
 version = '2.3.1.dev0'
 
 tests_require = [
-    'unittest2',
+    'ftw.builder',
     'plone.app.testing',
+    'unittest2',
     'zope.app.publisher',
     'zope.configuration',
     ]

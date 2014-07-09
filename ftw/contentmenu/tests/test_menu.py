@@ -1,14 +1,22 @@
-import unittest2 as unittest
-from plone.app.contentmenu.interfaces import IActionsMenu, IFactoriesMenu
-from plone.app.testing import TEST_USER_ID
+from ftw.builder import Builder
+from ftw.builder import create
+from ftw.contentmenu.interfaces import IContentmenuPostFactoryMenu
+from ftw.contentmenu.interfaces import IFtwContentmenuSpecific
+from ftw.contentmenu.testing import FTW_CONTENTMENU_INTEGRATION_TESTING
+from plone.app.contentmenu.interfaces import IActionsMenu
+from plone.app.contentmenu.interfaces import IFactoriesMenu
 from plone.app.testing import setRoles
+from plone.app.testing import TEST_USER_ID
 from Products.CMFCore.utils import getToolByName
 from zope.app.publisher.interfaces.browser import IBrowserMenu
-from zope.component import getUtility, provideAdapter
-from zope.interface import Interface, alsoProvides, implements
-
-from ftw.contentmenu.interfaces import IContentmenuPostFactoryMenu
-from ftw.contentmenu.testing import FTW_CONTENTMENU_INTEGRATION_TESTING
+from zope.component import getMultiAdapter
+from zope.component import getUtility
+from zope.component import provideAdapter
+from zope.interface import alsoProvides
+from zope.interface import alsoProvides
+from zope.interface import implements
+from zope.interface import Interface
+import unittest2 as unittest
 
 
 class NullPostFactoryMenu(object):
@@ -49,9 +57,9 @@ class TestActionsMenu(unittest.TestCase):
             action='string:${object_url}', condition='', permission=(),
             category='object_buttons', visible=True, icon_expr='', link_target='')
 
-        self.folder = self.portal[self.portal.invokeFactory('Folder',
-                                                            'folder')]
-        self.folder.invokeFactory('Document', 'doc1')
+        self.folder = create(Builder('folder'))
+        self.document = create(Builder('document')
+                               .within(self.folder).titled('doc1'))
         self.request = self.portal.REQUEST
         self.menu = getUtility(IBrowserMenu, name='ftw_contentmenu_actions',
                                context=self.folder)
@@ -83,6 +91,31 @@ class TestActionsMenu(unittest.TestCase):
                       [a['extra']['id'] for a in actions])
 
 
+class TestActionsSubMenu(unittest.TestCase):
+
+    layer = FTW_CONTENTMENU_INTEGRATION_TESTING
+
+    def setUp(self):
+        self.portal = self.layer['portal']
+        self.request = self.portal.REQUEST
+        alsoProvides(self.request, IFtwContentmenuSpecific)
+
+        setRoles(self.portal, TEST_USER_ID, ['Contributor'])
+        self.folder = create(Builder('folder'))
+        self.document = create(Builder('document')
+                               .within(self.folder).titled('doc1'))
+        self.submenu = getMultiAdapter([self.folder, self.request],
+                                       name='plone.contentmenu.actions')
+
+    def test_submenu_is_not_available_by_default(self):
+        self.assertFalse(self.submenu._has_transitions())
+
+    def test_submenu_is_available_for_workflow_actions(self):
+        wtool = getToolByName(self.portal, 'portal_workflow')
+        wtool.setDefaultChain('simple_publication_workflow')
+        self.assertTrue(self.submenu._has_transitions())
+
+
 class TestFactoriesMenu(unittest.TestCase):
 
     layer = FTW_CONTENTMENU_INTEGRATION_TESTING
@@ -90,9 +123,9 @@ class TestFactoriesMenu(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         setRoles(self.portal, TEST_USER_ID, ['Contributor'])
-        self.folder = self.portal[self.portal.invokeFactory('Folder',
-                                                            'folder')]
-        self.folder.invokeFactory('Document', 'doc1')
+        self.folder = create(Builder('folder'))
+        self.document = create(Builder('document')
+                               .within(self.folder).titled('doc1'))
         self.request = self.portal.REQUEST
         self.menu = getUtility(IBrowserMenu, name='ftw_contentmenu_factory',
                                context=self.folder)
