@@ -1,14 +1,18 @@
-import unittest2 as unittest
-from plone.app.contentmenu.interfaces import IActionsMenu, IFactoriesMenu
-from plone.app.testing import TEST_USER_ID
-from plone.app.testing import setRoles
-from Products.CMFCore.utils import getToolByName
-from zope.app.publisher.interfaces.browser import IBrowserMenu
-from zope.component import getUtility, provideAdapter
-from zope.interface import Interface, alsoProvides, implements
-
 from ftw.contentmenu.interfaces import IContentmenuPostFactoryMenu
 from ftw.contentmenu.testing import FTW_CONTENTMENU_INTEGRATION_TESTING
+from plone.app.contentmenu.interfaces import IActionsMenu
+from plone.app.contentmenu.interfaces import IFactoriesMenu
+from plone.app.testing import setRoles
+from plone.app.testing import TEST_USER_ID
+from Products.CMFCore.utils import getToolByName
+from zope.app.publisher.interfaces.browser import IBrowserMenu
+from zope.component import getMultiAdapter
+from zope.component import getUtility
+from zope.component import provideAdapter
+from zope.interface import alsoProvides
+from zope.interface import implements
+from zope.interface import Interface
+import unittest2 as unittest
 
 
 class NullPostFactoryMenu(object):
