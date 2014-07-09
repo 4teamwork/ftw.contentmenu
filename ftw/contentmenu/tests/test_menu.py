@@ -1,3 +1,5 @@
+from ftw.builder import Builder
+from ftw.builder import create
 from ftw.contentmenu.interfaces import IContentmenuPostFactoryMenu
 from ftw.contentmenu.testing import FTW_CONTENTMENU_INTEGRATION_TESTING
 from plone.app.contentmenu.interfaces import IActionsMenu
@@ -53,9 +55,9 @@ class TestActionsMenu(unittest.TestCase):
             action='string:${object_url}', condition='', permission=(),
             category='object_buttons', visible=True, icon_expr='', link_target='')
 
-        self.folder = self.portal[self.portal.invokeFactory('Folder',
-                                                            'folder')]
-        self.folder.invokeFactory('Document', 'doc1')
+        self.folder = create(Builder('folder'))
+        self.document = create(Builder('document')
+                               .within(self.folder).titled('doc1'))
         self.request = self.portal.REQUEST
         self.menu = getUtility(IBrowserMenu, name='ftw_contentmenu_actions',
                                context=self.folder)
@@ -94,9 +96,9 @@ class TestFactoriesMenu(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
         setRoles(self.portal, TEST_USER_ID, ['Contributor'])
-        self.folder = self.portal[self.portal.invokeFactory('Folder',
-                                                            'folder')]
-        self.folder.invokeFactory('Document', 'doc1')
+        self.folder = create(Builder('folder'))
+        self.document = create(Builder('document')
+                               .within(self.folder).titled('doc1'))
         self.request = self.portal.REQUEST
         self.menu = getUtility(IBrowserMenu, name='ftw_contentmenu_factory',
                                context=self.folder)

@@ -180,10 +180,9 @@ class CombinedActionsWorkflowSubMenuItem(menu.ActionsSubMenuItem,
             if len(type_actions) > 0:
                 return True
 
-        context_state = getMultiAdapter((self.context, self.request),
-                                        name='plone_context_state')
-        if context_state.workflow_state() is not None:
+        if len(self._transitions()) > 0:
             return True
+
         return False
 
 
