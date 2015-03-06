@@ -5,13 +5,12 @@ Changelog
 2.3.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
 
 2.3.1 (2014-10-20)
 ------------------
 
-- Nothing changed yet.
+- Don't show action menu when neither actions nor workflow transitions available.
+  [deif]
 
 
 2.3.0 (2014-03-03)
