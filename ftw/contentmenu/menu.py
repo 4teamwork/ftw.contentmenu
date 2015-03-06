@@ -11,6 +11,13 @@ from zope.i18n import translate
 from zope.interface import implements
 
 
+try:
+    from plone.protect.utils import addTokenToUrl
+except ImportError:
+    def addTokenToUrl(url, req=None):
+        return url
+
+
 class CombinedActionsWorkflowMenu(menu.ActionsMenu, menu.WorkflowMenu):
     """ Combines the default actions- and the default workflow menu
     """
@@ -116,7 +123,7 @@ class CombinedActionsWorkflowMenu(menu.ActionsMenu, menu.WorkflowMenu):
                 results.append({
                         'title': action['title'],
                         'description': description,
-                        'action': actionUrl,
+                        'action': addTokenToUrl(actionUrl),
                         'selected': False,
                         'icon': None,
                         'extra': {'id': 'workflow-transition-' +
