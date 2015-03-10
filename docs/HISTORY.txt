@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-2.3.2 (unreleased)
+2.4.0 (2015-03-10)
 ------------------
 
 - Add plone.protect 3.0 "auto" support: automatically add token to transition actions.
