@@ -46,9 +46,9 @@ Runs with `Plone <http://www.plone.org/>`_ `4.1`, `4.2` or `4.3`.
 Links
 =====
 
-- Main github project repository: https://github.com/4teamwork/ftw.contentmenu
-- Issue tracker: https://github.com/4teamwork/ftw.contentmenu/issues
-- Package on pypi: http://pypi.python.org/pypi/ftw.contentmenu
+- Github: https://github.com/4teamwork/ftw.contentmenu
+- Issues: https://github.com/4teamwork/ftw.contentmenu/issues
+- Pypi: http://pypi.python.org/pypi/ftw.contentmenu
 - Continuous integration: https://jenkins.4teamwork.ch/search?q=ftw.contentmenu
 
 
