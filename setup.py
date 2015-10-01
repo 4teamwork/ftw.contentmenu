@@ -49,6 +49,7 @@ setup(name='ftw.contentmenu',
         'zope.interface',
 
         # Plone
+        'Plone',
         'plone.app.contentmenu',
         'plone.app.upgrade',
         'Products.CMFCore',
